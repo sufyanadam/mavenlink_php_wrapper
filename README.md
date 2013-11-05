@@ -1,4 +1,5 @@
 # Lightweight PHP wrapper for the Mavenlink Api
+This is a lightweight wrapper in PHP for the Mavenlink Api
 
 ## Usage
 
@@ -74,3 +75,8 @@ $client = new MavenlinkApi('<your_api_token_here>');`
  }
 }
 `
+
+
+## TODO
+* Add support for PUT and DELETE methods
+* Update README with example usage for PUT, DELETE and CREATE examples

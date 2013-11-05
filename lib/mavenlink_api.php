@@ -24,7 +24,6 @@ class MavenlinkApi {
         $path = $this->getBaseUri() . $resourceName .  '.json' . '?' . $params;
         $curl = $this->getCurlHandle($path, $this->loginInfo);
         
-        print_r($path);
         $json = curl_exec($curl);
 
         return $json;
