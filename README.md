@@ -1,4 +1,4 @@
-Lightweight PHP wrapper for the Mavenlink Api
+Mavenlink API wrapper for PHP
 ==============================================
 
 * This is a lightweight wrapper in PHP for the [Mavenlink Api](http://github.com/mavenlink)
