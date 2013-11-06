@@ -55,7 +55,7 @@ Usage
 
 * Get all posts unfiltered, include the user who made the post in a single request ordered by newest_reply:desc
 
-print_r($result = $client->getJson('posts',
+    print_r($result = $client->getJson('posts',
 						    null,
 						    array('include' => 'user'),
 						    array('order' => 'newest_reply:desc')));
