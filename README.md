@@ -11,7 +11,6 @@ Usage
 
 * Get all parent posts (no replies), include the user who made the post and attachments in a single request ordered by id descending
 
-
 `print_r($client->getJson('posts', array('parents_only' => 'true', array('include' => 'attachments,user'), array('order' => 'id:desc')));`
 
     {
@@ -83,7 +82,18 @@ Usage
 	  }
     }
 
+
+* Create a post
+
+`$result = $client->createNew('post', array('message' => 'from php wrapper', 'workspace_id' => '222'));`
+
+    {
+      "count":1,
+      "posts":{"555":{"newest_reply_at":null,"message":"Hello Mavenlink","has_attachments":false,"created_at":"2013-11-06T08:53:42-08:00","updated_at":"2013-11-06T08:53:42-08:00","reply_count":0,"reply":false,"private":false,"id":"555","subject_id":null,"subject_type":null,"user_id":"111","workspace_id":"222","workspace_type":"Workspace","story_id":null}},
+      "results":[{"key":"posts","id":"31521545"}]
+    }
+
 ## TODO
 
 * Add support for PUT and DELETE methods
-* Update README with example usage for PUT, DELETE and CREATE examples
+* Update README with example usage for PUT, DELETE  examples

@@ -29,10 +29,10 @@ class MavenlinkApi {
         return $json;
     }
 
-    function createNew($resourcesPath, $params) {
-        $params = $this->labelParamKeys($model, $params);
+    function createNew($resourceName, $params) {
+        $params = $this->labelParamKeys($resourceName, $params);
 
-        $newPath = $this->getBaseUri() . $resourcesPath;
+        $newPath = $this->getBaseUri() . $resourceName . 's';
         $curl     = $this->createPostRequest($newPath, $this->loginInfo, $params);
         $response = curl_exec($curl);
 
