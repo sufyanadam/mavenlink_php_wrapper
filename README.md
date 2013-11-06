@@ -11,7 +11,10 @@ Usage
 
 * Get all parent posts (no replies), include the user who made the post and attachments in a single request ordered by id descending
 
-`print_r($client->getJson('posts', array('parents_only' => 'true', array('include' => 'attachments,user'), array('order' => 'id:desc')));`
+`print_r($client->getJson('posts',
+				      array('parents_only' => 'true',
+				      array('include' => 'attachments,user'),
+				      array('order' => 'id:desc')));`
 
     {
        "count":1,
