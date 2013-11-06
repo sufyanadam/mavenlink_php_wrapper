@@ -9,8 +9,8 @@ Usage
     require 'lib/mavenlink_api.php';
     $client = new MavenlinkApi('<your_api_token_here>');`
 
-Get all parent posts (no replies), include the user who made the post and attachments in a single request ordered by id descending
----------------------
+* Get all parent posts (no replies), include the user who made the post and attachments in a single request ordered by id descending
+
 
 `print_r($client->getJson('posts', array('parents_only' => 'true', array('include' => 'attachments,user'), array('order' => 'id:desc')));`
 
@@ -51,8 +51,8 @@ Get all parent posts (no replies), include the user who made the post and attach
        }
     }
 
-Get all posts unfiltered, include the user who made the post in a single request ordered by newest_reply:desc
---------------------------
+* Get all posts unfiltered, include the user who made the post in a single request ordered by newest_reply:desc
+
 `print_r($result = $client->getJson('posts', null, array('include' => 'user'), array('order' => 'newest_reply:desc')));`
 
     {
