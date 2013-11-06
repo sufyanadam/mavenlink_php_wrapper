@@ -50,7 +50,6 @@ Usage
 		     "filename":"turtle.jpg",
 		     "filesize":16225
 		  }
-		   }
 		}
 
 * Get all posts unfiltered, include the user who made the post in a single request ordered by newest_reply:desc
