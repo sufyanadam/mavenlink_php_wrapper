@@ -15,13 +15,12 @@ class MavenlinkApi {
         }
     }
 
-    function getJson($resourceName, $filters, $includes, $order) {
+    function getJson($resourceName, $params) {
         $valid_resources = array("attachments", "expense_categories", "expenses", "invoices", "posts", "stories", "time_entries", "users", "workspaces");
         
         if (!in_array($resourceName, $valid_resources)) return;
 
-        $params = http_build_query(array_merge(array_filter(array($filters, $includes, $order))));
-        $path = $this->getBaseUri() . $resourceName .  '.json' . '?' . $params;
+        $path = $this->getBaseUri() . $resourceName .  '.json' . '?' . http_build_query($params);
         $curl = $this->getCurlHandle($path, $this->loginInfo);
         
         $json = curl_exec($curl);
@@ -37,6 +36,25 @@ class MavenlinkApi {
         $response = curl_exec($curl);
 
         return $response;
+    }
+
+    function update($resourceName, $params){
+        $id = $params['id']; 
+        unset($params['id']);
+        $wrappedParams = $this->labelParamKeys($resourceName, $params);
+        
+        $updatePath = $this->getBaseUri() . $resourceName . 's/' . $id . '.json';
+        $curl = $this->createPutRequest($updatePath, $this->loginInfo, http_build_query($wrappedParams));
+        $response = curl_exec($curl);
+
+        return $response;
+    }
+
+    function delete($resourceName, $resrouceId ){
+        $deletePath = $this->getBaseUri() . $resourceName . 's/' . $resrouceId . '.json';
+        $curl = $this->createDeleteRequest($resourcePath, $deletePath);
+
+        return $response = curl_exec($curl);
     }
 
     function wrapParamFor($apiObjectName, $arrayKey) {
