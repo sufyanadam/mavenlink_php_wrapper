@@ -50,11 +50,12 @@ class MavenlinkApi {
         return $response;
     }
 
-    function delete($resourceName, $resrouceId ){
-        $deletePath = $this->getBaseUri() . $resourceName . 's/' . $resrouceId . '.json';
-        $curl = $this->createDeleteRequest($resourcePath, $deletePath);
+    function delete($resourceName, $resourceId ){
+        $deletePath = $this->getBaseUri() . $resourceName . 's/' . $resourceId . '.json';
+        $curl = $this->createDeleteRequest($deletePath, $this->loginInfo);
+        $response = curl_exec($curl);
 
-        return $response = curl_exec($curl);
+        return $response;
     }
 
     function wrapParamFor($apiObjectName, $arrayKey) {
@@ -89,7 +90,7 @@ class MavenlinkApi {
     }
   
     public static function getBaseUri() {
-        return self::$devMode ? 'https://mavenlink.local/api/v1/' : 'https://api.mavenlink.com/api/v1/';
+        return self::$devMode ? 'https://api.mavenlink.local/api/v1/' : 'https://api.mavenlink.com/api/v1/';
     }    
 
 
