@@ -7,6 +7,38 @@ This is a lightweight wrapper in PHP for the [Mavenlink Api](http://developer.ma
     require 'lib/mavenlink_api.php';
     $client = new MavenlinkApi('<your_api_token_here>');`
 
+## Fetching resources
+
+To get a JSON array of a particular resource, you can call `getJson` with
+the name of the resource in plural form and an array of any params as
+the first and second arguments respectively. For example:
+
+    $client->getJson('posts', array('parents_only' => 'true', 'include' => 'story,user', 'order' => 'newest_repy_at:desc'));
+
+## Creating resources
+
+Call `createNew` with the name of the resource in singular form as the
+first argument and an array containing the resource attributes. For example:
+
+    $client->createNew('time_entry', array('workspace_id' => '999', 'date_performed' => '09/09/99', 'notes' => 'stuff!!!!!', 'rate_in_cents' => '3000', 'billable' => 'true', 'time_in_minutes' => '120'));
+
+## Updating resources
+
+Call `update` with the name of the resource in singular form as the first argument
+and an array containing the id of the resource and the attributes to be updated. For example:
+
+    $client->update('story', array('id' => '901020', 'title' => 'Update all action items'));
+
+## Deleting resources
+
+Call `delete` with the name of the resource in singular form as the
+first argument and the id of the resource to be deleted as the second argument.
+For example:
+
+    $client->delete('story', '555');
+
+# More examples
+
 ## Fetching Posts
 
 Fetch recent posts across your workspaces:
@@ -98,10 +130,6 @@ You can edit Stories as follows:
 You can delete Stories as follows:
 
     $client->delete('story', '222');
-
-## Other resources
-
-The general pattern outlined above should work for all resources Mavenlink exposes via their API.
 
 
 ## Contributing
