@@ -71,7 +71,7 @@ To get all stories with a `start_date` in the year 2013:
 
 ## Searching Stories
 
-You can among the stories that you have access to by passing a `search` param and query string:
+You can search among the stories that you have access to by passing a `search` param and query string:
 
 	$client->getJson('stories', array('search' => 'readme'));
 
