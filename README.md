@@ -98,3 +98,16 @@ You can edit Stories as follows:
 You can delete Stories as follows:
 
     $client->delete('story', '222');
+
+## Other resources
+
+The general pattern outlined above should work for all resources Mavenlink exposes via their API.
+
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new pull request
