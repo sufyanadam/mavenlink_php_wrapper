@@ -1,104 +1,98 @@
-Mavenlink API wrapper for PHP
-==============================================
+# Mavenlink API wrapper for PHP
 
-* This is a lightweight wrapper in PHP for the [Mavenlink Api](http://developer.mavenlink.com/)
+This is a lightweight wrapper in PHP for the [Mavenlink Api](http://developer.mavenlink.com/)
 
-Usage
---------
+## Usage
 
     require 'lib/mavenlink_api.php';
     $client = new MavenlinkApi('<your_api_token_here>');`
 
-* Get all parent posts (no replies), include the user who made the post and attachments in a single request ordered by id descending
+## Fetching Posts
 
-		print_r($client->getJson('posts',
-					      array('parents_only' => 'true',
-					      array('include' => 'attachments,user'),
-					      array('order' => 'id:desc')));
+Fetch recent posts across your workspaces:
 
-		{
-		   "count":1,
-		   "results":[
-		  {
-		     "key":"posts",
-		     "id":"16270634"
-		  }
-		   ],
-		   "posts":{
-		  "16270634":{
-		     "id":"16270634",
-		     "message":"Hello World",
-		     "has_attachments":true,
-		     "user_id":"2",
-		     "workspace_id":"2249167",
-		     "attachment_ids":[
-			"6700107"
-		     ]
-		  }
-		   },
-		   "users":{
-		  "2":{
-		     "id":"2",
-		     "full_name":"John Doe",
-		     "email_address":"johnny_doe@example.com"
-		  }
-		   },
-		   "attachments":{
-		  "6700107":{
-		     "id":"6700107",
-		     "created_at":"2013-04-15T16:48:48-07:00",
-		     "filename":"turtle.jpg",
-		     "filesize":16225
-		  }
-		}
+	$client->getJson('posts');
 
-* Get all posts unfiltered, include the user who made the post in a single request ordered by newest_reply:desc
+Fetch a specific post:
+	$client->getJson('posts', array('only' => '222'));
 
-		print_r($result = $client->getJson('posts',
-							    null,
-							    array('include' => 'user'),
-							    array('order' => 'newest_reply:desc')));
+Include associated objects:
+	$client->getJson('posts', array('only' => '222', 'include' => 'story,user'));
 
-		{
-		   "count":1,
-		   "results":[
-		  {
-		     "key":"posts",
-		     "id":"16270634"
-		  }
-		   ],
-		   "posts":{
-		  "16270634":{
-		     "id":"16270634",
-		     "message":"Hello World",
-		     "has_attachments":true,
-		     "user_id":"2",
-		     "workspace_id":"2249167",
-		     "attachment_ids":[
-			"6700107"
-		     ]
-		  }
-		   },
-		   "users":{
-		  "2":{
-		     "id":"2",
-		     "full_name":"John Doe",
-		     "email_address":"johnny_doe@example.com"
-		  }
-		}
+Filter posts:
+
+	$client->getJson('posts', array('parents_only' => 'true'));
+
+Just combine parameters if you want to:
+
+	$client->getJson('posts', array('parents_only' => 'true', 'include' => 'story,user', 'order' => 'newest_repy_at:desc'));
 
 
-* Create a post
+## Creating a new Post
 
-`$result = $client->createNew('post', array('message' => 'from php wrapper', 'workspace_id' => '222'));`
+You can create Posts as follows:
 
-    {
-      "count":1,
-      "posts":{"555":{"newest_reply_at":null,"message":"Hello Mavenlink","has_attachments":false,"created_at":"2013-11-06T08:53:42-08:00","updated_at":"2013-11-06T08:53:42-08:00","reply_count":0,"reply":false,"private":false,"id":"555","subject_id":null,"subject_type":null,"user_id":"111","workspace_id":"222","workspace_type":"Workspace","story_id":null}},
-      "results":[{"key":"posts","id":"31521545"}]
-    }
+    $client->createNew('post', array('message' => 'Hello world!', 'workspace_id' => '444'));
 
-## TODO
+## Updating an existing Post
 
-* Add support for PUT and DELETE methods
-* Update README with example usage for PUT, DELETE  examples
+You can edit Posts as follows:
+
+	$client->update('post', array('id' => '111', 'message' => 'HELLO WORLD!!'));
+
+## Destroying an existing Post
+
+You can delete Workspace Posts by passing in the id of the post as follows:
+
+    $client->delete('post', '111');
+
+
+# Stories
+
+## Fetching Stories
+
+You can access all of your own stories from all workspaces you are in through the API as follows:
+
+	$client->getJson('stories');
+
+## Associated Objects
+
+You can include stories' associations with the `include` param.  For example, to include returned stories'  workspaces, you would do the following:
+
+	$client->getJson('stories', array('include' => 'workspace'));
+
+## Filtering Stories
+
+To get all stories with a `start_date` in the year 2013:
+
+	$client->getJson('stories', array('starting_between' => '2013-01-01:2013-12-31'));
+
+## Searching Stories
+
+You can among the stories that you have access to by passing a `search` param and query string:
+
+	$client->getJson('stories', array('search' => 'readme'));
+
+
+## Ordering Stories
+
+	$client->getJson('stories', array('order' => 'importance'));
+
+## Creating a new Story
+
+You can create stories as follows:
+
+	$client->createNew('story', array('workspace_id' => '111', 'title' => 'Finish documenting README', 'story_type' => 'task'));
+
+
+## Updating an existing Story
+
+You can edit Stories as follows:
+
+	$client->update('story', array('id' => '32915685', 'title' => 'Publish README'));
+
+## Destroying an existing Story
+
+You can delete Stories as follows:
+
+    $client->delete('story', '222');

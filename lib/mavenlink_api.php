@@ -15,12 +15,17 @@ class MavenlinkApi {
         }
     }
 
-    function getJson($resourceName, $params) {
+    function getJson($resourceName, $params = null) {
         $valid_resources = array("attachments", "expense_categories", "expenses", "invoices", "posts", "stories", "time_entries", "users", "workspaces");
         
         if (!in_array($resourceName, $valid_resources)) return;
+        
+        $path = $this->getBaseUri() . $resourceName .  '.json' . '?';
 
-        $path = $this->getBaseUri() . $resourceName .  '.json' . '?' . http_build_query($params);
+        if ($params != null) {
+            $path = $path . http_build_query($params);
+        }
+
         $curl = $this->getCurlHandle($path, $this->loginInfo);
         
         $json = curl_exec($curl);
@@ -30,6 +35,10 @@ class MavenlinkApi {
 
     function createNew($resourceName, $params) {
         $params = $this->labelParamKeys($resourceName, $params);
+
+        if ($resourceName == 'story') {
+            $resourceName = 'storie';
+        }
 
         $newPath = $this->getBaseUri() . $resourceName . 's';
         $curl     = $this->createPostRequest($newPath, $this->loginInfo, $params);
@@ -42,7 +51,11 @@ class MavenlinkApi {
         $id = $params['id']; 
         unset($params['id']);
         $wrappedParams = $this->labelParamKeys($resourceName, $params);
-        
+
+        if ($resourceName == 'story') {
+            $resourceName = 'storie';
+        }
+
         $updatePath = $this->getBaseUri() . $resourceName . 's/' . $id . '.json';
         $curl = $this->createPutRequest($updatePath, $this->loginInfo, http_build_query($wrappedParams));
         $response = curl_exec($curl);
@@ -51,7 +64,12 @@ class MavenlinkApi {
     }
 
     function delete($resourceName, $resourceId ){
+        if ($resourceName == 'story') {
+            $resourceName = 'storie';
+        }
+
         $deletePath = $this->getBaseUri() . $resourceName . 's/' . $resourceId . '.json';
+        print_r($deletePath);
         $curl = $this->createDeleteRequest($deletePath, $this->loginInfo);
         $response = curl_exec($curl);
 
@@ -112,6 +130,7 @@ class MavenlinkApi {
     function createDeleteRequest($url, $accessCredentials) {
         $curlHandle = $this->getCurlHandle($url, $accessCredentials);
         curl_setopt($curlHandle, CURLOPT_CUSTOMREQUEST, 'DELETE');
+        curl_setopt($curlHandle, CURLOPT_VERBOSE, '1');
 
         return $curlHandle;
     }
