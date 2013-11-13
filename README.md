@@ -14,9 +14,11 @@ Fetch recent posts across your workspaces:
 	$client->getJson('posts');
 
 Fetch a specific post:
+
 	$client->getJson('posts', array('only' => '222'));
 
 Include associated objects:
+
 	$client->getJson('posts', array('only' => '222', 'include' => 'story,user'));
 
 Filter posts:
