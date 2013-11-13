@@ -131,6 +131,9 @@ You can delete Stories as follows:
 
     $client->delete('story', '222');
 
+## Other resources
+
+Use the examples described above to guide you through working with all other resources exposed via the [Mavenlink Api](http://developer.mavenlink.com/)
 
 ## Contributing
 
